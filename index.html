@@ -3,21 +3,227 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Poder & Precio</title>
+  <title>Poder & Precio — Opinión, mercado y política</title>
+  <meta name="description" content="Mirada independiente sobre política y mercados: lo importante, explicado con evidencia y sin eufemismos." />
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;margin:0;display:grid;min-height:100vh;place-items:center;background:#0b0f14;color:#e6edf3}
-    .card{max-width:720px;padding:32px;border:1px solid #22303d;border-radius:14px;background:#0f141b}
-    h1{margin:0 0 8px;font-size:36px}
-    p{margin:0 0 12px;line-height:1.6}
-    .tag{display:inline-block;padding:.25rem .5rem;border:1px solid #2b3948;border-radius:999px;font-size:.85rem;opacity:.9}
-    a{color:#66b3ff;text-decoration:none}
+    :root{
+      --bg:#0b0f14; --card:#0f141b; --text:#e6edf3; --muted:#9fb0c0;
+      --line:#22303d; --accent:#2ea043; --accent-2:#58a6ff; --danger:#ff6b6b;
+      --shadow:rgba(0,0,0,.35);
+      /* Cambiá esta ruta si querés otro archivo/folder */
+      --hero:url("images/hero.jpg");
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text);
+      font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+    }
+    a{color:inherit}
+
+    /* ---------- HERO ---------- */
+    .hero{
+      min-height:100vh; position:relative; display:grid; place-items:center;
+      overflow:hidden; isolation:isolate;
+      background: #0c1117;
+    }
+    .hero::before{
+      content:""; position:absolute; inset:0; z-index:-2;
+      background-image: var(--hero);
+      background-size:cover; background-position:center;
+      filter:contrast(1.05) brightness(.85) saturate(1.05);
+      transform:scale(1.02);
+    }
+    .hero::after{
+      /* overlay gradual para legibilidad */
+      content:""; position:absolute; inset:0; z-index:-1;
+      background:
+        radial-gradient(80% 60% at 50% 40%, rgba(11,15,20,.15) 0%, rgba(11,15,20,.65) 55%, rgba(11,15,20,.85) 100%),
+        linear-gradient(180deg, rgba(11,15,20,.4) 0%, rgba(11,15,20,.92) 100%);
+    }
+    .wrap{width:min(1200px,92vw); margin:auto; padding:24px}
+
+    .badge{
+      display:inline-block; padding:.35rem .7rem; border:1px solid var(--line);
+      border-radius:999px; color:var(--muted); font-size:.9rem; backdrop-filter: blur(2px);
+    }
+
+    .hero-content{
+      text-align:center; max-width:980px; margin-inline:auto;
+      display:grid; gap:18px; transform:translateY(8px); opacity:0;
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .hero-content.revealed{opacity:1; transform:none}
+
+    h1.title{
+      font-size:clamp(32px,5.2vw,56px); line-height:1.12; margin:.2rem 0 .2rem;
+      text-shadow:0 2px 24px rgba(0,0,0,.25);
+    }
+    p.kicker{
+      font-weight:600; letter-spacing:.2px; color:#f0f6fc; margin:0 0 .5rem;
+    }
+    blockquote.claim{
+      margin:10px auto 8px; color:#c9d7e1; font-size:clamp(16px,2.2vw,20px);
+      font-style:italic;
+    }
+    .cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:8px}
+    .btn{
+      appearance:none; border:1px solid var(--line); background:#0e1620; color:#dce6f2;
+      padding:.85rem 1.15rem; border-radius:12px; text-decoration:none; font-weight:700;
+      transition:.2s transform ease, .2s border-color ease, .2s background ease;
+    }
+    .btn:hover{transform:translateY(-2px); border-color:#2b3948}
+    .btn.primary{background:var(--accent); border-color:transparent; color:#07140b}
+    .btn.secondary{background:#0e1620; border-color:#2b3948; color:#9fd1ff}
+
+    /* ticker */
+    .ticker{
+      margin-top:18px; border-top:1px dashed var(--line); padding-top:12px;
+      color:var(--muted); font-size:.95rem; display:flex; gap:14px; flex-wrap:wrap;
+      justify-content:center
+    }
+    .pill{
+      border:1px solid var(--line); border-radius:999px; padding:.35rem .7rem;
+    }
+    .pill.hot{border-color:var(--danger); color:#ffb3b3}
+
+    /* ---------- HALL DE FRASES ---------- */
+    section.hall{padding:48px 0}
+    .grid{
+      display:grid; gap:18px; grid-template-columns: repeat(12, 1fr);
+    }
+    .card{
+      background:var(--card); border:1px solid var(--line); border-radius:16px;
+      padding:18px; box-shadow:0 10px 26px var(--shadow);
+      display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center;
+      opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;
+    }
+    .card.revealed{opacity:1; transform:none}
+    .rank{font-weight:800; font-size:1.1rem; color:#9fb0c0}
+    .who{font-weight:800}
+    .quote{color:#cbd6e1; margin:.15rem 0 0; font-size:.98rem}
+    .meta{color:var(--muted); font-size:.86rem}
+    /* jerarquía visual (de mayor a menor) */
+    .span-12{grid-column:span 12}
+    .span-8 {grid-column:span 8}
+    .span-6 {grid-column:span 6}
+    .span-4 {grid-column:span 4}
+    .span-3 {grid-column:span 3}
+    @media (max-width:980px){
+      .span-12,.span-8,.span-6,.span-4,.span-3{grid-column:span 12}
+    }
+
+    footer{border-top:1px solid var(--line); padding:28px 0; color:var(--muted); text-align:center}
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="tag">Poder & Precio</div>
-    <h1>La verdad sin filtro detrás del discurso y del dinero</h1>
-    <p>Medio independiente sobre política y mercado. Sitio en construcción.</p>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-content" data-reveal>
+        <span class="badge">Poder & Precio</span>
+        <p class="kicker">Opinión, mercado y política en un solo lugar.</p>
+        <h1 class="title">Mirada independiente sobre política y mercados: lo importante, explicado con evidencia y sin eufemismos.</h1>
+        <blockquote class="claim">“Entre las palabras y los hechos hay un abismo. Aquí, lo medimos.”</blockquote>
+        <div class="cta">
+          <a class="btn primary" href="/articulos">Lee artículos</a>
+          <a class="btn secondary" href="/videos">Ver videos</a>
+        </div>
+
+        <!-- Ticker de novedades (editable) -->
+        <div class="ticker" aria-label="Novedades">
+          <span class="pill hot">Última hora</span>
+          <span class="pill">Dólar y tasas: resumen del día</span>
+          <span class="pill">Corte Suprema: fallo clave</span>
+          <span class="pill">Inflación: dato semanal</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HALL DE FRASES (agregás o reordenás a gusto) -->
+  <main class="wrap">
+    <section class="hall">
+      <h2 style="margin:0 0 14px;">Hall de Frases</h2>
+      <p style="color:var(--muted);margin:0 0 22px;">Ranking vivo. De mayor a menor, por calidad de la idea, evidencia y vigencia.</p>
+
+      <div class="grid">
+        <!-- #1 destacado (más grande) -->
+        <article class="card span-12" data-reveal>
+          <div class="rank">#1</div>
+          <div>
+            <div class="who">[Nombre Figura 1]</div>
+            <div class="quote">“Frase célebre más sólida y vigente.”</div>
+            <div class="meta">Peso: Muy alto · Fuente / Año</div>
+          </div>
+        </article>
+
+        <!-- #2 y #3 -->
+        <article class="card span-8" data-reveal>
+          <div class="rank">#2</div>
+          <div>
+            <div class="who">[Nombre Figura 2]</div>
+            <div class="quote">“Frase potente y verificable.”</div>
+            <div class="meta">Peso: Alto · Fuente / Año</div>
+          </div>
+        </article>
+
+        <article class="card span-6" data-reveal>
+          <div class="rank">#3</div>
+          <div>
+            <div class="who">[Nombre Figura 3]</div>
+            <div class="quote">“Frase con buen respaldo empírico.”</div>
+            <div class="meta">Peso: Medio-alto · Fuente / Año</div>
+          </div>
+        </article>
+
+        <!-- resto (más chicos) -->
+        <article class="card span-4" data-reveal>
+          <div class="rank">#4</div>
+          <div>
+            <div class="who">[Nombre Figura 4]</div>
+            <div class="quote">“Frase interesante.”</div>
+            <div class="meta">Peso: Medio · Fuente / Año</div>
+          </div>
+        </article>
+
+        <article class="card span-4" data-reveal>
+          <div class="rank">#5</div>
+          <div>
+            <div class="who">[Nombre Figura 5]</div>
+            <div class="quote">“Frase oportuna.”</div>
+            <div class="meta">Peso: Medio · Fuente / Año</div>
+          </div>
+        </article>
+
+        <article class="card span-3" data-reveal>
+          <div class="rank">#6</div>
+          <div>
+            <div class="who">[Nombre Figura 6]</div>
+            <div class="quote">“Frase breve.”</div>
+            <div class="meta">Peso: Ligero · Fuente / Año</div>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    © Poder & Precio — sin relato, sin anestesia.
+  </footer>
+
+  <!-- Scroll reveal mínimo -->
+  <script>
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:.15});
+    document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>
