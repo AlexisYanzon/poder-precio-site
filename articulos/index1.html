@@ -1,11 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Artículos - Poder & Precio</title>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Artículos — Poder & Precio</title>
+<style>
+:root{--bg:#0b0f14;--card:#0f141b;--text:#e6edf3;--muted:#9fb0c0;--line:#22303d;--accent:#2ea043;--shadow:rgba(0,0,0,.35)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
+a{color:#66b3ff;text-decoration:none}.wrap{width:min(1100px,92vw);margin:auto;padding:28px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.badge{border:1px solid var(--line);border-radius:999px;color:var(--muted);padding:.35rem .7rem}
+.btn{border:1px solid var(--line);background:#0e1620;color:#dce6f2;padding:.6rem .9rem;border-radius:10px}
+.btn:hover{border-color:#2b3948}
+h1{margin:.2rem 0 6px}.muted{color:var(--muted);margin:0 0 18px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 10px 24px var(--shadow)}
+.card h3{margin:.2rem 0}.meta{color:var(--muted);font-size:.9rem;margin:0 0 8px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.2rem .5rem;font-size:.8rem;color:var(--muted);margin-right:6px}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);text-align:center;margin-top:26px}
+</style>
 </head>
 <body>
+<main class="wrap">
+  <div class="header">
+    <span class="badge">Poder & Precio</span>
+    <a class="btn" href="/">← Volver al inicio</a>
+  </div>
   <h1>Artículos</h1>
-  <p>Aquí vas a encontrar nuestros análisis, ensayos y editoriales.</p>
+  <p class="muted">Análisis y opinión — actualizado regularmente.</p>
+
+  <section class="grid">
+    <!-- DUPLICA ESTAS CARDS PARA CADA NOTA -->
+    <article class="card">
+      <span class="tag">Política</span><span class="tag">Editorial</span>
+      <h3><a href="#">Los 5 casos que mueven el tablero</a></h3>
+      <p class="meta">29 Sep 2025 · 4 min de lectura</p>
+      <p>Por qué estos escándalos definen la confianza social y el 2027.</p>
+    </article>
+
+    <article class="card">
+      <span class="tag">Estrategia</span><span class="tag">Elecciones</span>
+      <h3><a href="#">Oposición 2027: 5 temas clave</a></h3>
+      <p class="meta">28 Sep 2025 · 5 min</p>
+      <p>Seguridad, economía productiva y reforma del Estado: mapa de ruta.</p>
+    </article>
+
+    <article class="card">
+      <span class="tag">Cripto</span><span class="tag">Mercados</span>
+      <h3><a href="#">Ripple (XRP) y la política del dinero</a></h3>
+      <p class="meta">27 Sep 2025 · 6 min</p>
+      <p>El caballo negro del sistema financiero: señales a mirar.</p>
+    </article>
+
+    <article class="card">
+      <span class="tag">Infraestructura</span><span class="tag">Guía</span>
+      <h3><a href="#">Polkadot vs Chainlink</a></h3>
+      <p class="meta">26 Sep 2025 · 7 min</p>
+      <p>Interoperabilidad vs oráculos: escenarios a 5 años.</p>
+    </article>
+  </section>
+  <footer>© Poder & Precio — sin relato, sin anestesia.</footer>
+</main>
 </body>
 </html>
