@@ -18,6 +18,26 @@ h1{margin:.2rem 0 6px}.muted{color:var(--muted);margin:0 0 18px}
 .card h3{margin:.2rem 0}.meta{color:var(--muted);font-size:.9rem;margin:0 0 8px}
 .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.2rem .5rem;font-size:.8rem;color:var(--muted);margin-right:6px}
 footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);text-align:center;margin-top:26px}
+  /* ====== NAV SUPERIOR ====== */
+.site-nav{
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(11,15,20,.7);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid #22303d;
+}
+.site-nav .container{
+  width:min(1100px,92vw); margin:auto; padding:12px 0;
+}
+.site-nav .bar{display:flex; align-items:center; justify-content:space-between;}
+.site-nav .brand{
+  font-weight:700; color:#e6edf3; text-decoration:none; letter-spacing:.2px;
+}
+.site-nav nav a{
+  display:inline-block; margin-left:14px; padding:.45rem .75rem;
+  color:#9fb0c0; text-decoration:none; border:1px solid #22303d; border-radius:999px;
+}
+.site-nav nav a:hover{ border-color:#2b3948; color:#dce6f2; }
+.site-nav nav a.current{ color:#e6edf3; border-color:#2ea043; }
 </style>
 </head>
 <body>
